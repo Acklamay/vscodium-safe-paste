@@ -1,5 +1,7 @@
 # Safe Terminal Paste (VS Code / VSCodium)
 
+Sadly an early version worked but this one does not yet. The issue is believed to be from the terminal perceiving the paste as complete when it is not and it auto sends on paste. The earlier version was slower and the buffer flow kept it from dropping and sending in chunks. Working on flow and pressure to fix and not sure if this issue is with all terminal varieties.
+
 A heuristic workaround extension that reduces silent truncation and interleaving when pasting large text blocks into the integrated terminal.
 
 ## The Problem
