@@ -1,0 +1,65 @@
+{
+  "name": "vscodium-safe-paste",
+  "displayName": "Safe Terminal Paste",
+  "description": "Heuristic workaround for terminal input corruption when pasting large text blocks. Chunks clipboard content and drip-feeds it to the terminal to reduce truncation and interleaving.",
+  "version": "1.3.0",
+  "publisher": "Acklamay",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Acklamay/vscodium-safe-paste.git"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aiassist.safePaste",
+        "title": "Terminal: Safe Paste"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "aiassist.safePaste",
+        "key": "ctrl+v",
+        "mac": "cmd+v",
+        "when": "terminalFocus && terminalHasBeenCreated && !findInputFocussed"
+      }
+    ],
+    "configuration": {
+      "title": "Safe Terminal Paste",
+      "properties": {
+        "safePaste.chunkSize": {
+          "type": "number",
+          "default": 50,
+          "minimum": 10,
+          "maximum": 512,
+          "markdownDescription": "Maximum characters per chunk sent to the terminal. VS Code's own internal chunker has used values as low as 50. Higher values are faster but increase the risk of corruption on some systems."
+        },
+        "safePaste.delayMs": {
+          "type": "number",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 500,
+          "markdownDescription": "Milliseconds to wait between chunks. Increase for slow systems, remote SSH sessions, or if you still observe corruption."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "18.x",
+    "typescript": "^5.1.3"
+  }
+}
